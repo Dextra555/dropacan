@@ -462,122 +462,63 @@ class UserController extends Controller
 
 ////////////////////////////// Order API/////////////////////////////////
 
-    public function orders(Request $request)
-    {
-        $email = $request->email;
-        $brand = $request->brands;
-        $quantity = $request->quantity;
-        $price = $request->price;
+public function orders(Request $request)
+{
+    $email = $request->email;
+    $brand = $request->brands;
+    $quantity = $request->quantity;
+    $price = $request->price;
 
+    // Check if all required fields are present
+    if(isset($email) && isset($brand) && isset($quantity) && isset($price)) {
+        // Retrieve the customer by email
+        $customer = Customer::where('email', $email)->first();
 
-       
+        // Check if customer exists
+        if($customer) {
+            // Fetch location details
+            $country = Country::find($customer->country);
+            $state = State::find($customer->state);
+            $city = City::find($customer->city);
+            $area = Area::find($customer->area);
 
-        if(isset($email) &&isset($brand) && isset($quantity) && isset($price) ){
-            
-            $customers = Customer::all();
+            // Construct location data
+            $locationData = [
+                'country' => $country->name,
+                'state' => $state->name,
+                'city' => $city->name,
+                'area' => $area->name,
+            ];
 
-            foreach ($customers as $customer) {
-                $countries =  $customer['country'];
-                $state =  $customer['state'];
-                $city =  $customer['city'];
-                $area =  $customer['area'];
+            $location = json_encode($locationData);
 
+            // Create order
+            $order = new Order();
+            $order->email = $email;
+            $order->brands = $brand;
+            $order->quantity = $quantity;
+            $order->price = $price;
+            $order->location = $location;
+            $order->userid = $customer->id; 
+            $order->save();
 
-                $user = Customer::where('email', $email)->first();
-                
-                if($user){
-
-                    $countryNames = Country::whereIn('id', $countries)->pluck('name');
-                    $stateNames = State::whereIn('id', $countries)->pluck('name');
-                    $cityNames = City::whereIn('id', $countries)->pluck('name');
-                    $areaNames = Area::whereIn('id', $countries)->pluck('name');
-
-
-                    $data = [
-                        'country' => $countryNames[0], 
-                        'state' => $stateNames[0], 
-                        'city' => $cityNames[0], 
-                        'area' => $areaNames[0], 
-                    ];
-
-                    $location = json_encode($data);
-
-        
-                }
-
-
-            }
-                   
-
-
-      
-
-              
-            
-            
-            
-            
-
-            
-            
-            
-
-    if( $user){
-        $countries = Customer::pluck('country');
-        $state = Customer::pluck('state');
-        $city = Customer::pluck('city');
-        $area = Customer::pluck('area');
-
-        
-        $countryNames = Country::whereIn('id', $countries)->pluck('name');
-        $stateNames = State::whereIn('id', $countries)->pluck('name');
-        $cityNames = City::whereIn('id', $countries)->pluck('name');
-        $areaNames = Area::whereIn('id', $countries)->pluck('name');
-
-        $data = [
-            'country' => $countryNames[0], 
-            'state' => $stateNames[0], 
-            'city' => $cityNames[0], 
-            'area' => $areaNames[0], 
-        ];
-        
-
-
-        $location = json_encode($data);
-        print_r($location);die();
-       
-       
-        
-            $userid = $user->id;
-
-        $order = new Order();
-        $order->email =  $email;
-        $order->brands =  $brand; 
-        $order->quantity = $quantity; 
-        $order->price = $price;
-        $order->location = $location; 
-        $order->userid = $userid; 
-        $order->save();
-        return response()->json([
-            'success' => true,
-            'message' => 'Order Created Successfuly',
-        ]);
+            return response()->json([
+                'success' => true,
+                'message' => 'Order Created Successfully',
+            ]);
+        } else {
+            // Customer not found
+            return response()->json(['message' => 'Customer not found'], 404);
         }
-
-        else{
-            return response()->json(['message' => 'Order Not Placed'], 400);
-        }
-
-    }
-    else {
+    } else {
+        // Missing required parameters
         return response()->json([
             'success' => false,
-            'message' => 'Invalid or missing ID parameter',
+            'message' => 'Invalid or missing parameters',
         ], 400);
     }
-
 }
-    
+
     
 
   
