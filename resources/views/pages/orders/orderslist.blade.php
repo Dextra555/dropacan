@@ -62,14 +62,27 @@
                                    
 
                                     <tbody>
+                                    @php
+                                        $sno = 1;
+                                    @endphp
+
                                     @foreach($orders as $order)
                                         <tr>
-                                            <td>{{ $order->id }}</td>
+                                            <td>{{ $sno++ }}</td>
                                             <td>{{ $order->email }}</td>
                                             <td> {{ $order->brands }} </td>
                                             <td> {{ $order->quantity }} </td>
                                             <td> {{ $order->price }} </td>
-                                            <td>{{ $order->location }}</td>
+                                                <td>
+                                                    @php
+                                                        $locationData = json_decode($order->location);
+                                                    @endphp
+
+                                                    Country: {{ $locationData->country }}<br>
+                                                    State: {{ $locationData->state }}<br>
+                                                    City: {{ $locationData->city }}<br>
+                                                    Area: {{ $locationData->area }}
+                                                </td>
 
                                             <td><a href="#" class="btn btn-sm btn-outline-danger btn-round btn-icon"><i class="fa fa-trash"></i></a>
                                             <a href="#" class="btn btn-sm btn-outline-success btn-round btn-icon"><i class="fa fa-edit"></i></a></td>
