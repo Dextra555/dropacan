@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('price');
             $table->string('location');
             $table->integer('userid');
+            $table->integer('status');
             $table->timestamps();
         });
     }

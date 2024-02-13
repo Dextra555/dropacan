@@ -1,0 +1,15 @@
+.status-bar {
+    padding: 0px;
+}
+.statusSelect {
+    height: 45px !important;
+    color: #0456d5;
+    font-weight: bold;
+    width: 150px;
+}
+.statusSelect option{
+    color: #000;
+    font-weight: bold;
+    padding:20px !important;
+    
+}

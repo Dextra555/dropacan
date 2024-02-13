@@ -16,6 +16,8 @@
     <link href="{{ asset('paper') }}/css/bootstrap.min.css" rel="stylesheet" />
     <link href="{{ asset('paper') }}/css/paper-dashboard.css?v=2.0.0" rel="stylesheet" />
     <link href="{{ asset('paper') }}/demo/demo.css" rel="stylesheet" />
+    <link href="{{ asset('/css/style.css') }}" rel="stylesheet">
+
 
 </head>
 

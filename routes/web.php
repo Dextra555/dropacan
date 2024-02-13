@@ -51,6 +51,9 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'App\Http\Controllers\ProfileController@password']);
 	Route::get('orders', [OrderController::class, 'Orders'])->name('Orders');
 
+	Route::post('/updateorderstatus', [OrderController::class, 'updateOrderStatus']);
+
+
 
 });
 Route::group(['middleware' => 'auth'], function () {
