@@ -4,12 +4,30 @@
 .statusSelect {
     height: 45px !important;
     color: #0456d5;
-    font-weight: bold;
+    font-weight: 600;
     width: 150px;
 }
 .statusSelect option{
     color: #000;
-    font-weight: bold;
+    font-weight: 500;
     padding:20px !important;
     
+}
+
+.status-column select#\31 {
+  color: #085cda;
+  border: 1px solid #085cda;
+}
+.status-column select#\32 {
+  color: red;
+  border: 1px solid red;
+}
+.status-column select#\33 {
+  color: green;
+  border: 1px solid green;
+}
+.status-bar .statusSelect {
+    border: 1px solid #dddddd;
+    padding: 5px;
+    height: 30px !important;
 }
