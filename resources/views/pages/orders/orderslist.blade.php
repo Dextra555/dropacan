@@ -60,8 +60,9 @@ $(document).ready(function() {
 <div class="content">
     <div class="row">
         <div class="col-md-12">
+            <span id="status-text"></span>
+
             <div class="form-group">
-              
 
             </div>
 
@@ -90,6 +91,7 @@ $(document).ready(function() {
                                     <th scope="col">Quantity</th>
                                     <th scope="col">Price</th>
                                     <th scope="col">Location</th>
+                                    <th scope="col">Date</th>
                                     <th scope="col">Status</th>
                                     <!-- <th scope="col">Action</th> -->
                                 </tr>
@@ -119,7 +121,7 @@ $(document).ready(function() {
                                             data: {
                                                 _token: token,
                                                 orderId: orderId,
-                                                newStatus: selectedValue
+                                                newStatus: selectedValue,
                                             },
 
                                             success: function(response) {
@@ -134,13 +136,18 @@ $(document).ready(function() {
 
                                                 var status = statusColumn.text(newStatus);
 
-
                                                 if (response.success) {
-                                                    // If successful, display the success message
-                                                    alert(response.message);
+                                                    $('#status-text').html(
+                                                        '<div class="alert alert-success alert-dismissible fade show" role="alert">' +
+                                                        response.message +
+                                                        '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>'
+                                                    );
                                                 } else {
-                                                    // If not successful, display the error message
-                                                    alert(response.message);
+                                                    $('#status-text').html(
+                                                        '<div class="alert alert-danger alert-dismissible fade show" role="alert">' +
+                                                        response.message +
+                                                        '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>'
+                                                    );
                                                 }
 
                                             },
@@ -152,6 +159,16 @@ $(document).ready(function() {
                                     });
                                 });
                                 </script>
+                                <script>
+                                $(document).ready(function() {
+                                    $('.statusSelect').change(function() {
+                                        var selectedValue = $(this).val();
+                                        $(this).attr('id', +selectedValue);
+                                    });
+                                });
+                                </script>
+
+
                                 @endpush
 
 
@@ -174,15 +191,16 @@ $(document).ready(function() {
                                         City: {{ $locationData->city }}<br>
                                         Area: {{ $locationData->area }}
                                     </td>
+                                    <td>{{ $order->created_at->format('d-m-y') }} <br>
+                                        {{ $order->created_at->format('h:i A') }}</td>
 
                                     <td class="status-column">
                                         <div class="modal-body status-bar">
                                             <div class="form-group">
 
-                                                <select class="form-control statusSelect"
+                                                <select id="{{ $order->status }}" class="form-control statusSelect"
                                                     data-order-id="{{ $order->id }}">
-                                                    <option class="opt-0" value="0"
-                                                        {{ $order->status == 0 ? 'selected' : '' }}> Select Status
+                                                    <option class="opt-0" value="0" selected disabled>Select Status
                                                     </option>
                                                     <option class="opt-1" value="1"
                                                         {{ $order->status == 1 ? 'selected' : '' }}> Processing</option>
@@ -207,12 +225,6 @@ $(document).ready(function() {
             </div>
 
             @endsection
-
-
-
-
-
-
 
 
             @push('scripts')

@@ -26,12 +26,11 @@ class OrderController extends Controller
       $orderId = $request->input('orderId');
       $newStatus = $request->input('newStatus');
 
-      // Update order status in the database
       $order = Order::find($orderId);
       if ($order) {
           $order->status = $newStatus;
           $order->save();
-          return response()->json(['success' => true, 'message' => 'Order status updated successfully']);
+          return response()->json(['success' => true, 'message' => 'Order status updated to successfully']);
       } else {
           return response()->json(['success' => false, 'message' => 'Order not found']);
       }
