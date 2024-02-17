@@ -227,12 +227,6 @@ $(document).ready(function() {
             @endsection
 
 
-
-
-
-
-
-
             @push('scripts')
             <script>
             function showNotificationMessage(from, align, message, status) {
