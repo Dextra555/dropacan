@@ -52,10 +52,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('orders', [OrderController::class, 'Orders'])->name('Orders');
 
 	Route::post('/updateorderstatus', [OrderController::class, 'updateOrderStatus']);
-	Route::get('/send-email', [OrderController::class, 'sendEmail']);
-
-
-
+	Route::post('/send-email', [OrderController::class, 'updateOrderStatus']);
 
 });
 Route::group(['middleware' => 'auth'], function () {

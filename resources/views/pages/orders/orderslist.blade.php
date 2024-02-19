@@ -85,7 +85,7 @@ $(document).ready(function() {
 
                             <thead class="thead-light">
                                 <tr>
-                                    <th scope="col">S NO</th>
+                                    <th scope="col">S.NO</th>
                                     <th scope="col">Email</th>
                                     <th scope="col">Brand</th>
                                     <th scope="col">Quantity</th>
@@ -246,3 +246,4 @@ $(document).ready(function() {
             }
             </script>
             @endpush
+            

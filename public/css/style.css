@@ -13,7 +13,9 @@
     padding:20px !important;
     
 }
-
+.statusSelect{
+  color: #000;
+}
 .status-column select#\31 {
   color: #085cda;
   border: 1px solid #085cda;

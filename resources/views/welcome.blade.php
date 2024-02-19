@@ -21,6 +21,21 @@
             </div>
         </div>
     </div>
+
+   
+    <h1>Drop A Can - Order Status</h1>
+    <p>Order ID: {{ $order->id }}</p>
+    
+    @if($order->status == 1)
+        <p>Order Status: Processing</p>
+    @elseif($order->status == 2)
+        <p>Order Status: Cancelled</p>
+    @elseif($order->status == 3)
+        <p>Order Status: Completed</p>
+    @else
+        <p>Order Status: Unknown</p>
+    @endif
+
 @endsection
 
 @push('scripts')
